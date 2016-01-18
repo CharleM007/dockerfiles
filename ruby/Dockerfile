@@ -7,17 +7,23 @@ MAINTAINER Philipp Garbe <philipp.garbe@web.de>
 #                        -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
 #                        -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
 #                        --log-driver none \
+#                        --entrypoint rake OR bundle OR ruby
 #                        pgarbe/rake "$@"'
 
-RUN apk update && apk add \
-	build-base \
-	ca-certificates \
-	ruby-dev \
-	&& rm -rf /var/cache/apk/*
+ENV BUILD_PACKAGES bash curl-dev ruby-dev build-base
+ENV RUBY_PACKAGES ruby ruby-io-console ruby-bundler
+
+# Update and install all of the required packages.
+# At the end, remove the apk cache
+RUN apk update && \
+    apk upgrade && \
+    apk add $BUILD_PACKAGES && \
+    apk add $RUBY_PACKAGES && \
+    rm -rf /var/cache/apk/*
 
 RUN gem install bundler
 
 ENV HOME /root
 WORKDIR $HOME/rake
 
-ENTRYPOINT [ "rake" ]
+ENTRYPOINT [ "ruby" ]
