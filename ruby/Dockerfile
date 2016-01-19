@@ -21,8 +21,6 @@ RUN apk update && \
     apk add $RUBY_PACKAGES && \
     rm -rf /var/cache/apk/*
 
-RUN gem install bundler
-
 ENV HOME /root
 WORKDIR $HOME/rake
 
