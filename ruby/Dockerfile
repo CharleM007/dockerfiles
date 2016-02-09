@@ -11,7 +11,7 @@ MAINTAINER Philipp Garbe <philipp.garbe@web.de>
 #                        pgarbe/rake "$@"'
 
 ENV BUILD_PACKAGES bash curl-dev ruby-dev build-base
-ENV RUBY_PACKAGES ruby ruby-io-console ruby-bundler
+ENV RUBY_PACKAGES ruby ruby-io-console ruby-bundler ruby-rake
 
 # Update and install all of the required packages.
 # At the end, remove the apk cache
